@@ -1,3 +1,6 @@
+const float ALPHA_THRESHOLD      = 1.0/255.0;
+const float BRIGHTNESS_THRESHOLD = 0.5;
+
 varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
 varying vec2 v_vSurfaceUV;
@@ -22,21 +25,24 @@ float getBrightness(vec3 colour)
 
 void main()
 {
-    vec4  outlineSampleC = texture2D(u_sOutline, v_vSurfaceUV);
-    float outlineAlphaL  = texture2D(u_sOutline, v_vSurfaceUV + vec2(u_vTexel.x, 0.0)).a;
-    float outlineAlphaT  = texture2D(u_sOutline, v_vSurfaceUV + vec2(0.0, u_vTexel.y)).a;
-    float outlineAlphaR  = texture2D(u_sOutline, v_vSurfaceUV - vec2(u_vTexel.x, 0.0)).a;
-    float outlineAlphaB  = texture2D(u_sOutline, v_vSurfaceUV - vec2(0.0, u_vTexel.y)).a;
+    vec4  spriteSample = texture2D(u_sOutline, v_vSurfaceUV);
+    float spriteAlphaL = texture2D(u_sOutline, v_vSurfaceUV + vec2(u_vTexel.x, 0.0)).a;
+    float spriteAlphaT = texture2D(u_sOutline, v_vSurfaceUV + vec2(0.0, u_vTexel.y)).a;
+    float spriteAlphaR = texture2D(u_sOutline, v_vSurfaceUV - vec2(u_vTexel.x, 0.0)).a;
+    float spriteAlphaB = texture2D(u_sOutline, v_vSurfaceUV - vec2(0.0, u_vTexel.y)).a;
     
     float appSurfBrightness = getBrightness(texture2D(gm_BaseTexture, v_vTexcoord).rgb);
     
     gl_FragColor = vec4(0.0);
     
-    if (outlineSampleC.a < 0.1)
+    if (spriteSample.a < ALPHA_THRESHOLD)
     {
-        if ((outlineAlphaL >= 0.1) || (outlineAlphaT >= 0.1) || (outlineAlphaR >= 0.1) || (outlineAlphaB >= 0.1))
+        if ((spriteAlphaL >= ALPHA_THRESHOLD)
+        ||  (spriteAlphaT >= ALPHA_THRESHOLD)
+        ||  (spriteAlphaR >= ALPHA_THRESHOLD)
+        ||  (spriteAlphaB >= ALPHA_THRESHOLD))
         {
-            if (appSurfBrightness < 0.5)
+            if (appSurfBrightness < BRIGHTNESS_THRESHOLD)
             {
                 gl_FragColor = unpackGMColour(u_vOutlineColour);
             }
@@ -44,6 +50,6 @@ void main()
     }
     else
     {
-        gl_FragColor = outlineSampleC;
+        gl_FragColor = spriteSample;
     }
 }
