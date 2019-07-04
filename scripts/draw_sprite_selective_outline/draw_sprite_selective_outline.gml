@@ -1,3 +1,6 @@
+/// Selective Outline Shader v1.0.0
+/// @jujuadams 2019/07/04
+///
 /// @param sprite
 /// @param index
 /// @param x
@@ -44,11 +47,13 @@ var _surface_real_h = 2 + _yscale*sprite_get_height(_sprite);
 
 if ((surface_get_width(_surface_1) < _surface_real_w) || (surface_get_height(_surface_1) < _surface_real_h))
 {
+    show_debug_message("draw_sprite_selective_outline: Surface 1 resized to " + string(_surface_real_w) + "x" + string(_surface_real_h));
     surface_resize(_surface_1, _surface_real_w, _surface_real_h);
 }
 
 if ((surface_get_width(_surface_2) < _surface_real_w) || (surface_get_height(_surface_2) < _surface_real_h))
 {
+    show_debug_message("draw_sprite_selective_outline: Surface 2 resized to " + string(_surface_real_w) + "x" + string(_surface_real_h));
     surface_resize(_surface_2, _surface_real_w, _surface_real_h);
 }
 

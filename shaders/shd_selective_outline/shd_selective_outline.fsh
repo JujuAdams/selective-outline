@@ -1,3 +1,6 @@
+/// Selective Outline Shader v1.0.0
+/// @jujuadams 2019/07/04
+
 const float ALPHA_THRESHOLD      = 1.0/255.0;
 const float BRIGHTNESS_THRESHOLD = 0.5;
 
