@@ -1,6 +1,8 @@
 /// Selective Outline Shader v1.0.0
 /// @jujuadams 2019/07/04
 ///
+/// NB. This method is designed to be easy to use rather than super efficient.
+///
 /// @param sprite
 /// @param index
 /// @param x
