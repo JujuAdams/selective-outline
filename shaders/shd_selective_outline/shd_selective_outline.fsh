@@ -5,7 +5,7 @@ varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
 varying vec2 v_vSurfaceUV;
 
-uniform sampler2D u_sOutline;
+uniform sampler2D u_sSpriteSurface;
 uniform vec2 u_vTexel;
 uniform vec2 u_vOutlineColour;
 
@@ -25,11 +25,11 @@ float getBrightness(vec3 colour)
 
 void main()
 {
-    vec4  spriteSample = texture2D(u_sOutline, v_vSurfaceUV);
-    float spriteAlphaL = texture2D(u_sOutline, v_vSurfaceUV + vec2(u_vTexel.x, 0.0)).a;
-    float spriteAlphaT = texture2D(u_sOutline, v_vSurfaceUV + vec2(0.0, u_vTexel.y)).a;
-    float spriteAlphaR = texture2D(u_sOutline, v_vSurfaceUV - vec2(u_vTexel.x, 0.0)).a;
-    float spriteAlphaB = texture2D(u_sOutline, v_vSurfaceUV - vec2(0.0, u_vTexel.y)).a;
+    vec4  spriteSample = texture2D(u_sSpriteSurface, v_vSurfaceUV);
+    float spriteAlphaL = texture2D(u_sSpriteSurface, v_vSurfaceUV + vec2(u_vTexel.x, 0.0)).a;
+    float spriteAlphaT = texture2D(u_sSpriteSurface, v_vSurfaceUV + vec2(0.0, u_vTexel.y)).a;
+    float spriteAlphaR = texture2D(u_sSpriteSurface, v_vSurfaceUV - vec2(u_vTexel.x, 0.0)).a;
+    float spriteAlphaB = texture2D(u_sSpriteSurface, v_vSurfaceUV - vec2(0.0, u_vTexel.y)).a;
     
     float appSurfBrightness = getBrightness(texture2D(gm_BaseTexture, v_vTexcoord).rgb);
     

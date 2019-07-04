@@ -89,13 +89,16 @@ draw_sprite_ext(_sprite, _index,
 surface_reset_target();
 
 //Now we draw to the second surface using our shader
+//The shader samples the sprite surface, looking for an edge
+//Once it finds an edge, it looks at the application surface
+//If the application surface is dark enough, it draws the outline
+//If the shader cannot find an edge, it'll draw the sprite as normal
 surface_set_target(_surface_2);
 draw_clear_alpha(c_black, 0.0);
 
 shader_set(shd_selective_outline);
-
 var _texture = surface_get_texture(_surface_1);
-texture_set_stage(shader_get_sampler_index(shd_selective_outline, "u_sOutline"), _texture);
+texture_set_stage(shader_get_sampler_index(shd_selective_outline, "u_sSpriteSurface"), _texture);
 shader_set_uniform_f(shader_get_uniform(shd_selective_outline, "u_vTexel"), texture_get_texel_width(_texture), texture_get_texel_height(_texture));
 shader_set_uniform_f(shader_get_uniform(shd_selective_outline, "u_vOutlineColour"), _outline_colour, _outline_alpha); //colour, alpha
 
@@ -107,7 +110,6 @@ draw_surface_part_ext(application_surface,
                       c_white, 1.0);
 
 shader_reset();
-
 surface_reset_target();
 
 //Draw surface 2
