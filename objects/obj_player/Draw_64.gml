@@ -1,4 +1,4 @@
-var _string = "Selective Outline Shader v1.0.0\n2019/07/04\n@jujuadams\n\nArrow keys to move";
+var _string = "Selective Outline Shader v1.0.1\n2019/07/05\n@jujuadams\n\nArrow keys to move";
 
 draw_set_colour(c_black);
 draw_text( 9, 10, _string);

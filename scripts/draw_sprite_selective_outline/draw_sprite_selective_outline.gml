@@ -66,21 +66,23 @@ var _sprite_t = _y - 1 - _yscale*sprite_get_yoffset(_sprite);
 //Find the portion of the application surface that we want to borrow
 var _camera_xscale = 1;
 var _camera_yscale = 1;
-var _surface_l = _sprite_l;
-var _surface_t = _sprite_t;
-var _surface_r = _sprite_l + sprite_get_width( _sprite);
-var _surface_b = _sprite_t + sprite_get_height(_sprite);
+var _camera_x      = 0;
+var _camera_y      = 0;
 
 //Correct for the camera if it's been specified
 if (is_real(_camera) && (_camera >= 0))
 {
     _camera_xscale = view_wport[0] / camera_get_view_width( _camera);
     _camera_yscale = view_hport[0] / camera_get_view_height(_camera);
-    _surface_l = _camera_xscale*(_sprite_l - camera_get_view_x(_camera));
-    _surface_t = _camera_yscale*(_sprite_t - camera_get_view_y(_camera));
-    _surface_r = _sprite_l + _camera_xscale*_xscale*sprite_get_width( _sprite);
-    _surface_b = _sprite_t + _camera_yscale*_yscale*sprite_get_height(_sprite);
+    _camera_x      = camera_get_view_x(_camera);
+    _camera_y      = camera_get_view_y(_camera);
 }
+
+//Figure out what part of the application surface we need to chop out
+var _surface_l = max(0, _camera_xscale*(_sprite_l - _camera_x));
+var _surface_t = max(0, _camera_yscale*(_sprite_t - _camera_y));
+var _surface_r = _surface_l + _camera_xscale*_xscale*(sprite_get_width( _sprite)+2);
+var _surface_b = _surface_t + _camera_yscale*_yscale*(sprite_get_height(_sprite)+2);
 
 //Draw the sprite to a temporary surface
 //It's possible to avoid using this particular surface if sprites are configured correctly...
