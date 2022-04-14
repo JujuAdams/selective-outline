@@ -1,3 +1,26 @@
+/*
+	This function outlines a sprite with a specific color.
+	@jujuadams
+	
+	Usage example:
+	Put this code in the CREATE event of your object
+	------------------------------------------------
+	// Declare two surface variables
+	surface_1 = -1;
+	surface_2 = -1;
+	
+	Put this code in the DRAW event of your object
+	------------------------------------------------
+	//Keep the surfaces alive
+	//Doesn't really matter what size the surface is, draw_sprite_selective_outline() resizes the surface if needed
+	if (!surface_exists(surface_1)) surface_1 = surface_create(1, 1);
+	if (!surface_exists(surface_2)) surface_2 = surface_create(1, 1);
+
+	draw_sprite_selective_outline(
+		sprite_index, image_index, x, y, image_xscale, image_yscale, image_blend, image_alpha,
+        view_get_camera(0), c_fuchsia, image_alpha, surface_1, surface_2);
+*/
+
 /// Selective Outline Shader v1.0.0
 /// @jujuadams 2019/07/04
 ///
@@ -11,13 +34,13 @@
 /// @param {real=1} _yscale
 /// @param {color=c_white} _sprite_colour
 /// @param {real=1} _sprite_alpha
-/// @param {int=0} _camera
+/// @param {camera} _camera
 /// @param {color=c_black} _outline_colour
 /// @param {real=1} _outline_alpha
 /// @param {surface} _surface1
 /// @param {surface} _surface2
 /// @param {int=0} _viewport
-function draw_sprite_selective_outline(_sprite, _index, _x, _y, _xscale, _yscale, _sprite_colour, _sprite_alpha, _camera = 0, _outline_colour = c_black, _outline_alpha = 1, _surface_1, _surface_2, _viewport = 0) {
+function draw_sprite_selective_outline(_sprite, _index, _x, _y, _xscale, _yscale, _sprite_colour, _sprite_alpha, _camera, _outline_colour = c_black, _outline_alpha = 1, _surface_1, _surface_2, _viewport = 0) {
 
 	//Verify the two input surfaces
 	if (!surface_exists(_surface_1))
